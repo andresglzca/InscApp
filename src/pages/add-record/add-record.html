@@ -1,0 +1,66 @@
+<ion-header class="add-record-header">
+  <ion-navbar>
+    <button ion-button clear (click)="closeModal()">
+			<ion-icon name="md-close" ></ion-icon>
+		</button>
+    <ion-title>Agregar campero</ion-title>
+    <button class="btn-save" ion-button (click)="submit()" form="add-record" id="add-record">
+			<span ion-text  >Guardar</span>
+		</button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [(formGroup)]="data" (ngSubmit)="addRecord()" #addRecordForm="ngForm" id="add-record">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-2>
+          <img class="v-center" [src]="photo" *ngIf="photo"/>
+          <button class="v-center"  *ngIf="!photo" (click)="takePic()" ion-button clear icon-only>
+				    <ion-icon name='camera' ></ion-icon>
+			    </button>
+        </ion-col>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label stacked>Nombre Completo *</ion-label>
+            <ion-input text-capitalize formControlName="name" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    <ion-item>
+      <ion-label>Género *</ion-label>
+      <ion-select formControlName="gender" interface="action-sheet" cancelText="Cancelar">
+        <ion-option value="masculino">Masculino</ion-option>
+        <ion-option value="femenino">Femenino</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Fecha de nacimiento *</ion-label>
+      <ion-datetime formControlName="birthdate" displayFormat="DD MM YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Observaciones</ion-label>
+      <ion-textarea text-capitalize formControlName="description"></ion-textarea>
+    </ion-item>
+    <br>
+    <ion-title>Datos del padre o tutor</ion-title>
+    <br>
+    <ion-item>
+      <ion-label stacked>Nombre Completo *</ion-label>
+      <ion-input text-capitalize formControlName="parent" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Telefono *</ion-label>
+      <ion-input formControlName="contact" type="number"></ion-input>
+    </ion-item>
+    <br>
+    <ion-title>Pago</ion-title>
+    <br>
+    <ion-item>
+      <ion-label fixed>Pago</ion-label>
+      <ion-input class="input-payment" placeholder="00" formControlName="payment" type="number" max="{{price}}"></ion-input>
+    </ion-item>
+  </form>
+</ion-content>

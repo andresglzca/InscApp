@@ -1,3 +1,125 @@
-page-home {
+.searchbar {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 99;
+  
+  input{
+    box-shadow: none !important;
+    }
+}
 
+.list-avatar-page {
+  ion-note {
+    font-size: 12px;
+    align-self: flex-start;
+    position: absolute;
+   	margin-bottom: 16px !important;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  h2{
+  	display: inline-block;
+    text-transform: capitalize;
+    text-rendering: optimizeSpeed;
+  }
+  h2.paid:after, h2.pending:after, h2.unpaid:after{
+  	content: '';
+    width: 6px;
+    height: 6px;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 2px 7px;
+  }
+  h2.paid:after{
+    background: #46c35f;
+  }
+  h2.pending:after{
+    background: #FFC107;
+  }
+  h2.unpaid:after{
+    background: #fa424a;
+  }
+
+  .item-md p{
+  	margin-right: 50px;
+  }
+}
+.list-md ion-item-options .button{
+    margin: 0 !important;
+    height: auto !important;
+}
+.circle{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    text-align: center;
+        display: table-cell;
+    vertical-align: middle;
+    background: #607D8B;
+    color: white;
+    font-weight: bold
+
+}
+.circle#femenino{
+  background: #E91E63;
+  color: white;
+}
+.circle#masculino{
+  background: #2196F3;
+  color: white;
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fadeInUp {
+  animation-name: fadeInUp;
+}
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+.fadeOutRight {
+  animation-name: fadeOutRight;
+}
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fadeInRight {
+  animation-name: fadeInRight;
 }

@@ -1,0 +1,39 @@
+<ion-header class="edit-record-header">
+  <ion-navbar>
+    <button ion-button clear (click)="closeModal()">
+			<span ion-text color="light" showWhen="ios">Cancel</span>
+			<ion-icon name="md-close" ></ion-icon>
+		</button>
+    <ion-title>Editar campero</ion-title>
+    <button class="btn-save" ion-button (click)="submit()" form="edit-record" id="edit-record">
+			<span ion-text >Editar</span>
+		</button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [(formGroup)]="data" (ngSubmit)="editRecord()" #editRecordForm="ngForm" id="edit-record">
+    <div *ngFor="let record of record | async">
+      <ion-item>
+        <ion-label stacked>Nombre Completo *</ion-label>
+        <ion-input text-capitalize formControlName="name" value="{{record.name}}" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Género *</ion-label>
+        <ion-select formControlName="gender" interface="action-sheet" cancelText="Cancelar">
+          <ion-option value="masculino">Masculino</ion-option>
+          <ion-option value="femenino">Femenino</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Fecha de nacimiento *</ion-label>
+        <ion-datetime formControlName="birthdate"  displayFormat="DD MM YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Observaciones</ion-label>
+        <ion-textarea text-capitalize formControlName="description" value="{{record.description}}"></ion-textarea>
+      </ion-item>
+    </div>
+  </form>
+
+</ion-content>

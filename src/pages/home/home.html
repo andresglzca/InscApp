@@ -1,14 +1,35 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>Capernaúm</ion-title>
+		<ion-buttons end>
+			<button ion-button icon-only (click)="showHistory()">
+  				<ion-icon name="list"></ion-icon>
+			</button>
+			<button ion-button icon-only (click)="popOver($event)">
+  				<ion-icon name="more"></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content class="list-avatar-page" (ionScroll)="scroll($event)">
+	<ion-list (scroll)="scroll($event)">
+		<div id="scroll"></div>
+		<!-- <button ion-item (click)="showRecordPage(record.$key, record.name)" (press)="deleteRecord(record.$key, record.name)"> -->
+		<button ion-item detail-none *ngFor="let record of records | async" disabled="{{record.status}}"  (click)="showRecordPage(record.$key, record.name)"
+		 (press)="showActionSheet(record.$key, record.name, record.payment)" >
+				<ion-avatar item-left>
+					<img *ngIf="record.photURL" src="{{record.photURL}}">
+					<div *ngIf="!record.photURL" class="circle" id="{{record.gender}}">{{letter(record.name)}}</div>
+				</ion-avatar>
+				<h2 class='{{record.paymentstatus}}'>{{record.name}}</h2>
+				<p>{{record.staff}}</p>
+				<ion-note item-right>{{record.registrationdate}}</ion-note>
+			</button>
+	</ion-list>
+
+	<ion-fab id="btn-fab" right bottom>
+		<button ion-fab color="primary" (click)="addRecord()"><ion-icon name="md-person-add"></ion-icon></button>
+	</ion-fab>
+
 </ion-content>

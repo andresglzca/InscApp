@@ -1,0 +1,22 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Historial</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list class="feed">
+    <ion-item *ngFor="let history of history | async">
+      <span class="badge feed-circle {{history.action}}" item-left></span>
+      <h2><strong>{{history.staff}}</strong> {{history.action}} a: </h2>
+      <h3 text-capitalize>{{history.user}}</h3>
+        <div *ngIf="history.description" id="comment">
+          <p>{{history.description}}</p>
+        </div>
+      <p>{{dateFrom(history.date)}}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

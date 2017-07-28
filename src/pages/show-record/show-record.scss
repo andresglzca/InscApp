@@ -1,0 +1,136 @@
+.top-toolbar.toolbar-md{
+  height: 100%;
+  min-height: 100%;
+}
+span.badge.feed-circle{
+  position: relative;
+  z-index: 20;
+}
+.badge.feed-circle.abonó:before {
+    border-color: #41aaff;
+}
+.badge.feed-circle.agregó:before {
+    border-color: #4caf50;
+}
+
+.badge.feed-circle:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 12px;
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: solid 3px transparent;
+    margin-right: 6px;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    position: relative;
+    top: 2px;
+    background: white;
+}
+
+.page-show-record {
+    h2{
+    text-rendering: optimizeSpeed;
+  }
+   ion-note {
+    font-size: 12px;
+    align-self: flex-start;
+    margin-top: 14px !important;
+  }
+  .feed ion-note{
+    margin-top: 38px !important;
+  }
+ .item-right-top {
+    font-size: 12px;
+    align-self: flex-start;
+   	margin-bottom: 14px !important;
+    margin-right: 15px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    // color: #fff;
+    background: #fa424a;
+    border-radius: 2px;
+    height: 22px;
+    line-height: 21px;
+    padding: 0 9px;
+    font-weight: 600;
+    background: white;
+  }
+  ion-icon{
+      margin-right: 5px;
+  }
+  .no-ellipsis{
+      white-space: normal ;
+  }
+  .paid{
+    // background: #46c35f;
+    border: 1px solid #46c35f;
+    color: #46c35f;
+  }
+  .pending{
+    // background: #FFC107;
+    border: 1px solid #FFC107;
+    color: #FFC107;
+  }
+  .unpaid{
+    // background: #fa424a;
+    border: 1px solid #fa424a;
+    color: #fa424a;
+  }
+
+  .swiper-slide{
+    display: block;
+  }
+  .activity-item{
+      color: #919fa9;
+  }
+ .feed ion-item:before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 81%;
+    position: absolute;
+    left: 24px;
+    top: 60%;
+    border-left: solid 1px #d8e2e7;
+    z-index: 20
+  }
+  .feed ion-item:last-of-type::before{
+    top: -26px;
+  }
+  .feed .item{
+    contain: inherit
+  }
+  .feed .item-block{
+    overflow: inherit
+  }
+  .feed ion-avatar{
+    position: relative;
+    z-index: 50
+  }
+  .circle{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    text-align: center;
+        display: table-cell;
+    vertical-align: middle;
+    background: #607D8B;
+    color: white;
+    font-weight: bold
+
+}
+.circle#femenino{
+  background: #E91E63;
+  color: white;
+}
+.circle#masculino{
+  background: #2196F3;
+  color: white;
+}
+}

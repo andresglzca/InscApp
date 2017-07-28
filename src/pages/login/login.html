@@ -1,0 +1,22 @@
+<ion-content class="page-login" padding>
+	<div class="login-content">
+		<div id="login-avatar" text-center>
+			<img src="http://themesanytime.com/startui/demo/img/avatar-sign.png">
+		</div>
+		<ion-title text-center>Entrar</ion-title>
+
+		  <ion-item>
+		    <ion-label stacked>Correo</ion-label>
+		    <ion-input type="email" [(ngModel)]="email" name="email"></ion-input>
+		  </ion-item>
+
+		  <ion-item>
+		    <ion-label stacked>Contraseña</ion-label>
+		    <ion-input type="password"  [(ngModel)]="password" name="password"></ion-input>
+		  </ion-item>
+		  <div class="login-button" text-center>
+		  	<button ion-button round block (click)="login2()" >Iniciar</button>	
+		  </div>
+		
+	</div>
+</ion-content>

@@ -1,0 +1,26 @@
+.page-login {
+	background: #eceff4;
+
+	#login-avatar{
+		width: 100px;
+		height: 100px;
+    	margin: 0 auto 10px;
+    }
+    .login-content{
+		background: #fff;
+    	border: solid 1px #d8e2e7;
+    	border-radius: 5px;
+    	padding: 38px 20px;
+		position: absolute;
+  		left: 50%;
+  		top: 50%;
+  		transform: translate(-50%, -50%);
+  		width: 90%;
+	}
+    .login-button{
+    	display: block;
+    	margin-top: 30px;
+    	position: relative;
+    }
+
+}

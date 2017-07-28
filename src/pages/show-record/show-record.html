@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Detalle del campero</ion-title>
+  </ion-navbar>
+  <ion-toolbar class="top-toolbar" no-padding  no-border color="neutro">
+    <ion-segment  color="neutro" class="top-segment" [(ngModel)]="section">
+      <ion-segment-button value="record-info">
+        Info
+      </ion-segment-button>
+      <ion-segment-button value="history-info">
+        Historial
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="page-show-record">
+
+
+  <div class="body-segment" [ngSwitch]="section">
+    <ion-list *ngSwitchCase="'record-info'">
+      <div *ngFor="let record of record | async ">
+        <button ion-item>
+          <ion-avatar item-left>
+            <img *ngIf="record.photURL" src="{{record.photURL}}">
+            <div *ngIf="!record.photURL" class="circle" id="{{record.gender}}">{{letter(record.name)}}</div>
+          </ion-avatar>
+          <h2 text-capitalize>{{record.name}}</h2>
+          <p><strong>Staff: </strong>{{record.staff}}</p>
+          <ion-note item-right>{{record.registrationdate}}</ion-note>
+          <div class="item-right-top {{record.paymentstatus}}" item-end>{{paymentbadge}}</div>
+        </button>
+
+        <ion-item>
+          <ion-icon name="md-calendar"></ion-icon>
+          {{record.birthdate}}
+          <div id="edad" item-right> {{age}} años </div>
+        </ion-item>
+        <ion-item>
+          <ion-label class="no-ellipsis">
+            <strong> Observaciones: </strong> {{record.description}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="md-contact"></ion-icon>
+          <span text-capitalize>{{record.parent}}</span>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="md-call"></ion-icon>
+          <a href='tel:{{record.contacto}}'>{{record.contact}}</a>
+        </ion-item>
+      </div>
+    </ion-list>
+
+
+    <ion-list class="feed" *ngSwitchCase="'history-info'">
+      <ion-item *ngFor="let history of history | async">
+       <span class="badge feed-circle {{history.action}}" item-left></span>
+        <h2><strong>{{history.staff}}</strong> {{history.action}} a: </h2>
+        <h3 text-capitalize>{{history.user}}</h3>
+        <ion-note item-right>{{test(history.date)}}</ion-note>
+      </ion-item>
+    </ion-list>
+  </div>
+
+
+
+</ion-content>

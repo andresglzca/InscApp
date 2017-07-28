@@ -3,28 +3,63 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { Camera } from '@ionic-native/camera';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
+import { AddRecordPage } from '../pages/add-record/add-record';
+import { EditRecordPage } from '../pages/edit-record/edit-record';
+import { ShowRecordPage } from '../pages/show-record/show-record';
+import { ShowHistoryPage } from '../pages/show-history/show-history';
+import { ShowPicturePage } from '../pages/show-picture/show-picture';
+
+import { AngularFireModule } from 'angularfire2';
+import { PopoverComponent } from '../components/popover/popover';
+
+export const config = {
+  apiKey: "AIzaSyB3jqHAJ-6qVsM56FHKHzQJBFknl9Ip8Gg",
+  authDomain: "capernaum2k17-c0107.firebaseapp.com",
+  databaseURL: "https://capernaum2k17-c0107.firebaseio.com",
+  projectId: "capernaum2k17-c0107",
+  storageBucket: "capernaum2k17-c0107.appspot.com",
+  messagingSenderId: "801496423905"
+};
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    LoginPage,
+    AddRecordPage,
+    EditRecordPage,
+    ShowRecordPage,
+    ShowHistoryPage,
+    ShowPicturePage,
+    PopoverComponent
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(config)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    LoginPage,
+    AddRecordPage,
+    EditRecordPage,
+    ShowRecordPage,
+    ShowHistoryPage,
+    ShowPicturePage,
+    PopoverComponent
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    Camera,
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }

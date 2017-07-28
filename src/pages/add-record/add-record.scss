@@ -1,0 +1,48 @@
+ion-header .button-md{
+    vertical-align: middle
+}
+.add-record-header ion-title{
+    display: inline-flex
+}
+.add-record-header .btn-save{
+    position: absolute;
+    box-shadow: none;
+    top: 0;
+    right: 0;
+    margin: 0;
+    border-radius: 0;
+    height: 100%;
+}
+
+ion-input.input-payment:before{
+    content: "$";
+    font-size: 20px;
+    vertical-align: middle;
+    position: absolute;
+    bottom: 12px;
+}   
+ion-input.input-payment input{
+    margin: 13px 8px 13px 18px;
+}
+#edad{
+    display: inline;
+    float: right;
+}
+.grid{
+    padding: 0;
+}
+.grid [col-10], .grid [col-2], .col{
+    padding: 0;
+}
+.v-center{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.grid img {
+        width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    overflow: hidden;
+}
