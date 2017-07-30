@@ -1,0 +1,33 @@
+<ion-header class="add-record-header">
+  <ion-navbar>
+    <button ion-button clear (click)="closeModal()">
+			<ion-icon name="md-close" ></ion-icon>
+		</button>
+    <ion-title>Agregar Hermanos</ion-title>
+
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+
+  <ion-item-group *ngIf="selectedBrothersList !=0">
+    <ion-item-divider color="light">
+      Hermanos Agregados
+      <button (click)="saveListBrothers()" ion-button item-end outline>Guardar</button>
+    </ion-item-divider>
+    <button ion-item detail-none *ngFor="let brother of selectedBrothersList" (click)="unselectRecord(record)">
+      {{brother}}
+      <ion-icon name="checkmark" item-end></ion-icon>
+    </button>
+  </ion-item-group>
+
+
+  <ion-item-group>
+    <ion-item-divider color="light">Camperos Disponibles</ion-item-divider>
+    <button ion-item detail-none *ngFor="let record of loadedRecordsList" (click)="selectRecord(record);">
+      {{ record }}
+    </button>
+  </ion-item-group>
+</ion-content>

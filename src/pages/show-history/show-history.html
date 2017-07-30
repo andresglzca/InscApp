@@ -8,6 +8,8 @@
 
 
 <ion-content>
+  <p class="v-center no-hay" *ngIf="empty">Aun no hay camperos</p>
+
   <ion-list class="feed">
     <ion-item *ngFor="let history of history | async">
       <span class="badge feed-circle {{history.action}}" item-left></span>

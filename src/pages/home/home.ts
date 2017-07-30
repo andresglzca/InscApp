@@ -23,6 +23,7 @@ export class HomePage {
   price; offertDiscount: number;
   paymenStatus; recordname: any;
   scrollw: any;
+  empty = true;
 
 
 
@@ -51,7 +52,13 @@ export class HomePage {
     loading.present();
 
     this.records.subscribe(snapshots => {
+      if(snapshots == ""){
+       this.empty = true;
+      }else{
+        this.empty = false;
+      }
       loading.dismissAll();
+
     },
       (err) => {
         console.log(err)

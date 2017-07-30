@@ -13,6 +13,7 @@ import { EditRecordPage } from '../pages/edit-record/edit-record';
 import { ShowRecordPage } from '../pages/show-record/show-record';
 import { ShowHistoryPage } from '../pages/show-history/show-history';
 import { ShowPicturePage } from '../pages/show-picture/show-picture';
+import { SelectBrotherPage } from '../pages/select-brother/select-brother'
 
 import { AngularFireModule } from 'angularfire2';
 import { PopoverComponent } from '../components/popover/popover';
@@ -36,7 +37,8 @@ export const config = {
     ShowRecordPage,
     ShowHistoryPage,
     ShowPicturePage,
-    PopoverComponent
+    SelectBrotherPage,
+    PopoverComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +55,7 @@ export const config = {
     ShowRecordPage,
     ShowHistoryPage,
     ShowPicturePage,
+    SelectBrotherPage,
     PopoverComponent
   ],
   providers: [

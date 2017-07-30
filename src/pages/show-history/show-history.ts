@@ -13,7 +13,8 @@ export class ShowHistoryPage {
 
   history: FirebaseListObservable<any>;
   when: any;
-
+  empty = true;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, public angFire: AngularFire, public loadingCtrl: LoadingController) {
     this.history = angFire.database.list("/history")
 
@@ -24,6 +25,11 @@ export class ShowHistoryPage {
     loading.present();
 
     this.history.subscribe(snapshots => {
+      if (snapshots == "") {
+        this.empty = true;
+      } else {
+        this.empty = false;
+      }
       loading.dismissAll();
     },
       (err) => {

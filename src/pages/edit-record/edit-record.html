@@ -1,7 +1,7 @@
 <ion-header class="edit-record-header">
   <ion-navbar>
     <button ion-button clear (click)="closeModal()">
-			<span ion-text color="light" showWhen="ios">Cancel</span>
+			<span ion-text color="light"></span>
 			<ion-icon name="md-close" ></ion-icon>
 		</button>
     <ion-title>Editar campero</ion-title>
@@ -11,12 +11,12 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <form [(formGroup)]="data" (ngSubmit)="editRecord()" #editRecordForm="ngForm" id="edit-record">
-    <div *ngFor="let record of record | async">
+<ion-content padding class="edit-record-page">
+  <form [(formGroup)]="data" #editRecordForm="ngForm" id="edit-record">
+    <div >
       <ion-item>
         <ion-label stacked>Nombre Completo *</ion-label>
-        <ion-input text-capitalize formControlName="name" value="{{record.name}}" type="text"></ion-input>
+        <ion-input text-capitalize formControlName="name" type="text"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Género *</ion-label>
@@ -27,12 +27,33 @@
       </ion-item>
       <ion-item>
         <ion-label>Fecha de nacimiento *</ion-label>
-        <ion-datetime formControlName="birthdate"  displayFormat="DD MM YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
+        <ion-datetime formControlName="birthdate"  displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label stacked>Observaciones</ion-label>
         <ion-textarea text-capitalize formControlName="description" value="{{record.description}}"></ion-textarea>
       </ion-item>
+      <br>
+      <ion-item>
+        <ion-title>Hermanos</ion-title>
+        <button (click)="addBrothers()" ion-button outline item-end icon-left>
+        <ion-icon name="add"></ion-icon> Agregar
+      </button>
+      </ion-item>
+
+      <ion-item-group *ngIf="!brothersListSaved">
+        <ion-item>
+          <p>No hay hermanos seleccionados</p>
+        </ion-item>
+      </ion-item-group>
+
+
+      <ion-item-group *ngIf="brothersListSaved">
+        <ion-item *ngFor="let brother of brothersListSaved">
+          {{brother}}
+          <ion-icon name="checkmark" item-end></ion-icon>
+        </ion-item>
+      </ion-item-group>
     </div>
   </form>
 

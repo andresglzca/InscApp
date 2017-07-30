@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, ViewController, LoadingController, AlertController, ModalController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
+import { SelectBrotherPage } from '../select-brother/select-brother';
 import * as firebase from 'firebase'
 
 import moment from 'moment';
@@ -41,8 +42,12 @@ export class AddRecordPage {
   public base64Image: string;
   private data: FormGroup;
   array = [];
+  brothersListSaved: any;
+  counter: number;
 
-  constructor(public navCtrl: NavController,
+
+
+  constructor(public navCtrl: NavController, public modalCtrl: ModalController,
     public navParams: NavParams, public viewCtrl: ViewController,
     public angFire: AngularFire, public loadingCtrl: LoadingController,
     public alertCtrl: AlertController, public formBuilder: FormBuilder, public camera: Camera) {
@@ -63,11 +68,8 @@ export class AddRecordPage {
       paymentstatus: [''],
       registrationdate: [''],
       photURL: [''],
-      'history': {
-        'action': '',
-        'staff': '',
-        'date': '',
-        'user': ''
+      'hermanos': {
+        
       }
     });
 
@@ -76,7 +78,7 @@ export class AddRecordPage {
 
 
   }
-  public getCurrentUser(){
+  public getCurrentUser() {
     var currentUser = window.localStorage.getItem("CurrentUser");
     return currentUser;
   }
@@ -110,6 +112,37 @@ export class AddRecordPage {
     });
 
   }
+ 
+  addBrothers() {
+    let modal = this.modalCtrl.create(SelectBrotherPage);
+
+    modal.onDidDismiss((brotherListSaved) => {
+      this.brothersListSaved = brotherListSaved;
+    
+    });
+    modal.present();
+
+  }
+
+  // streamBrothers(brotherName){
+    
+  //   this.brothersListSaved.forEach(name => {
+      
+  //     this.records = this.angFire.database.list('/usuarios', {
+  //       query: {
+  //         orderByChild: 'name',
+  //         equalTo: name
+  //       }
+  //     });
+
+  //     this.records.subscribe(items =>{
+  //       var key = items[0].$key
+  //       this.records.update(key, { hermanos:this.data.controls.hermanos.value})
+  //     })
+     
+  //   });
+   
+  // }
 
 
   paymentStatus(): string {
@@ -166,11 +199,11 @@ export class AddRecordPage {
         date: moment().format("dddd, MMMM Do YYYY, h:mm:ss a"),
         user: this.data.controls['name'].value
       }
-        
-      this.data.value.history.action = 'agregó';
-      this.data.value.history.staff = window.localStorage.getItem("CurrentUser");
-      this.data.value.history.date = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
-      this.data.value.history.user = this.data.controls['name'].value;
+
+      // this.data.value.history.action = 'agregó';
+      // this.data.value.history.staff = window.localStorage.getItem("CurrentUser");
+      // this.data.value.history.date = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
+      // this.data.value.history.user = this.data.controls['name'].value;
 
 
       // saving data loader
@@ -185,8 +218,12 @@ export class AddRecordPage {
           this.storageRef.child('users/' + this.data.controls['name'].value + ".jpg").getDownloadURL().then(url => {
             this.Url = url;
             this.data.controls['photURL'].setValue(this.Url);
+            if (this.brothersListSaved) {
+              this.data.controls['hermanos'].setValue(this.brothersListSaved)
+            }
             const pushRecord = this.records.push(this.data.value);
             pushRecord
+              // .then(_ => this.streamBrothers(this.data.controls.name.value) )
               .then(_ => loader.dismiss())
               .then(_ => this.closeModal())
               .catch(err => console.log(err, 'You dont have access!'));
@@ -200,13 +237,17 @@ export class AddRecordPage {
 
       } else {
         //saving data action
+        if(this.brothersListSaved){
+          this.data.controls['hermanos'].setValue(this.brothersListSaved)
+        }
         const pushRecord = this.records.push(this.data.value);
         loader.present();
         pushRecord
+          // .then(_ => this.streamBrothers(this.data.controls.name.value))
           .then(_ => loader.dismiss())
           .then(_ => this.closeModal())
           .catch(err => console.log(err, 'You dont have access!'));
-      const pushHistory = this.history.push(historyData);
+        const pushHistory = this.history.push(historyData);
       }
     }
 
@@ -218,7 +259,8 @@ export class AddRecordPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddRecordPage');
+
+    console.log(this.navParams.get('name'));
   }
 
 }

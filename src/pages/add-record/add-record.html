@@ -10,13 +10,13 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <form [(formGroup)]="data" (ngSubmit)="addRecord()" #addRecordForm="ngForm" id="add-record">
+<ion-content class="add-record-page" >
+  <form [(formGroup)]="data" #addRecordForm="ngForm" id="add-record">
     <ion-grid>
       <ion-row>
         <ion-col col-2>
-          <img class="v-center" [src]="photo" *ngIf="photo"/>
-          <button class="v-center"  *ngIf="!photo" (click)="takePic()" ion-button clear icon-only>
+          <img class="v-center" [src]="photo" *ngIf="photo" />
+          <button class="v-center" *ngIf="!photo" (click)="takePic()" ion-button clear icon-only>
 				    <ion-icon name='camera' ></ion-icon>
 			    </button>
         </ion-col>
@@ -28,7 +28,7 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-    
+
     <ion-item>
       <ion-label>Género *</ion-label>
       <ion-select formControlName="gender" interface="action-sheet" cancelText="Cancelar">
@@ -45,7 +45,9 @@
       <ion-textarea text-capitalize formControlName="description"></ion-textarea>
     </ion-item>
     <br>
-    <ion-title>Datos del padre o tutor</ion-title>
+    <ion-item>
+      <ion-title>Datos del padre o tutor</ion-title>
+    </ion-item>
     <br>
     <ion-item>
       <ion-label stacked>Nombre Completo *</ion-label>
@@ -56,11 +58,36 @@
       <ion-input formControlName="contact" type="number"></ion-input>
     </ion-item>
     <br>
-    <ion-title>Pago</ion-title>
+    <ion-item>
+      <ion-title>Hermanos</ion-title>
+      <button (click)="addBrothers()" ion-button outline item-end icon-left>
+        <ion-icon name="add"></ion-icon> Agregar
+      </button>
+    </ion-item>
+
+    <ion-item-group *ngIf="!brothersListSaved">
+      <ion-item>
+        <p>No hay hermanos seleccionados</p>
+      </ion-item>
+    </ion-item-group>
+
+
+    <ion-item-group *ngIf="brothersListSaved">
+      <ion-item *ngFor="let brother of brothersListSaved">
+        {{brother}}
+        <ion-icon name="checkmark" item-end></ion-icon>
+      </ion-item>
+    </ion-item-group>
+
+    <br>
+    <ion-item>
+      <ion-title>Pago</ion-title>
+    </ion-item>
     <br>
     <ion-item>
       <ion-label fixed>Pago</ion-label>
-      <ion-input class="input-payment" placeholder="00" formControlName="payment" type="number" max="{{price}}"></ion-input>
+      <ion-input class="input-payment" placeholder="" formControlName="payment" type="number" max="{{price}}"></ion-input>
     </ion-item>
   </form>
+
 </ion-content>

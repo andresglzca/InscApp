@@ -13,6 +13,8 @@
 </ion-header>
 
 <ion-content class="list-avatar-page" (ionScroll)="scroll($event)">
+	<p  class="v-center no-hay" *ngIf="empty">Aun no hay camperos</p>
+
 	<ion-list (scroll)="scroll($event)">
 		<div id="scroll"></div>
 		<!-- <button ion-item (click)="showRecordPage(record.$key, record.name)" (press)="deleteRecord(record.$key, record.name)"> -->
