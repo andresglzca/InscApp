@@ -30,7 +30,7 @@ export class SelectBrotherPage {
       this.loadedRecords = recordsList;
     });
     console.log(this.loadedRecords + 'items')
-    this.initializeItems();
+   
   }
 
   initializeItems() {
@@ -74,6 +74,6 @@ export class SelectBrotherPage {
     this.viewCtrl.dismiss(this.brothersListSaved);
   }
   ionViewDidLoad() {
-
+ this.initializeItems();
   }
 }
