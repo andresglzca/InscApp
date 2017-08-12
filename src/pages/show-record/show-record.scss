@@ -7,10 +7,16 @@ span.badge.feed-circle{
   z-index: 20;
 }
 .badge.feed-circle.abonó:before {
-    border-color: #41aaff;
+    border-color: #4caf50;
 }
 .badge.feed-circle.agregó:before {
-    border-color: #4caf50;
+    border-color: #9c27b0;
+}
+.badge.feed-circle.editó:before {
+    border-color: #41aaff;
+}
+.badge.feed-circle.deshabilitó:before {
+    border-color: #f44336;
 }
 
 .badge.feed-circle:before {
@@ -46,7 +52,7 @@ span.badge.feed-circle{
  .item-right-top {
     font-size: 12px;
     align-self: flex-start;
-   	margin-bottom: 14px !important;
+   	// margin-bottom: 14px !important;
     margin-right: 15px;
     position: absolute;
     right: 0;
@@ -55,11 +61,20 @@ span.badge.feed-circle{
     background: #fa424a;
     border-radius: 2px;
     height: 22px;
-    line-height: 21px;
     padding: 0 9px;
     font-weight: 600;
     background: white;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
   }
+  .page-show-record .label-md{
+    margin-top: 11px;
+    margin-bottom: 11px;
+  }
+  // for android
+ 
   ion-icon{
       margin-right: 5px;
   }

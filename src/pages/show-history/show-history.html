@@ -11,12 +11,15 @@
   <p class="v-center no-hay" *ngIf="empty">Aun no hay camperos</p>
 
   <ion-list class="feed">
-    <ion-item *ngFor="let history of history | async">
+    <ion-item *ngFor="let history of history | async ">
       <span class="badge feed-circle {{history.action}}" item-left></span>
       <h2><strong>{{history.staff}}</strong> {{history.action}} a: </h2>
       <h3 text-capitalize>{{history.user}}</h3>
-        <div *ngIf="history.description" id="comment">
-          <p>{{history.description}}</p>
+        <div *ngIf="check(history.description) === 'string';" id="comment">
+          <p >{{history.description}}</p>
+        </div>
+        <div *ngIf="check(history.description) == 'object';" id="comment">
+          <p *ngFor="let post of history['description']">{{post}}</p>
         </div>
       <p>{{dateFrom(history.date)}}</p>
     </ion-item>

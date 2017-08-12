@@ -21,15 +21,16 @@
   <div class="body-segment" [ngSwitch]="section">
     <ion-list *ngSwitchCase="'record-info'">
       <div *ngFor="let record of record | async ">
-        <button ion-item>
+        <button detail-none ion-item>
           <ion-avatar item-left>
             <img *ngIf="record.photURL" src="{{record.photURL}}">
             <div *ngIf="!record.photURL" class="circle" id="{{record.gender}}">{{letter(record.name)}}</div>
           </ion-avatar>
           <h2 text-capitalize>{{record.name}}</h2>
           <p><strong>Staff: </strong>{{record.staff}}</p>
-          <ion-note item-right>{{record.registrationdate}}</ion-note>
-          <div class="item-right-top {{record.paymentstatus}}" item-end>{{paymentbadge}}</div>
+          <p><strong>Fecha: </strong>{{record.registrationdate}}</p>
+          <div item-right class="item-right-top {{record.paymentstatus}}" item-end>{{paymentbadge}}</div>
+         
         </button>
 
         <ion-item>
@@ -37,15 +38,25 @@
           {{record.birthdate}}
           <div id="edad" item-right> {{age}} años </div>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="record.shirtSize">
+          <ion-label class="no-ellipsis">
+            <strong> Talla de playera: </strong> {{record.shirtSize}}
+          </ion-label>
+        </ion-item>
+        <ion-item *ngIf="record.church">
+          <ion-label class="no-ellipsis">
+            <strong text-capitalize> Iglesia: </strong> <span text-capitalize>{{record.church}}</span>
+          </ion-label>
+        </ion-item>
+        <ion-item *ngIf="record.description">
           <ion-label class="no-ellipsis">
             <strong> Observaciones: </strong> {{record.description}}
           </ion-label>
         </ion-item>
-         <ion-item>
+        <ion-item *ngIf="record.hermanos">
           <ion-label class="no-ellipsis">
             <strong> Hermanos: </strong> <br>
-            <p>{{record.hermanos}} </p>
+            <p *ngFor="let hermano of record['hermanos']">{{hermano}} </p>
           </ion-label>
         </ion-item> 
         <ion-item>
@@ -54,7 +65,7 @@
         </ion-item>
         <ion-item>
           <ion-icon name="md-call"></ion-icon>
-          <a href='tel:{{record.contacto}}'>{{record.contact}}</a>
+          <a href='#' (click)="callNumber(record.contact)">{{record.contact}}</a>
         </ion-item>
       </div>
     </ion-list>

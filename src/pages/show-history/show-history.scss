@@ -3,13 +3,16 @@ span.badge.feed-circle{
   z-index: 20;
 }
 .badge.feed-circle.abonó:before {
-    border-color: #41aaff;
-}
-.badge.feed-circle.agregó:before {
     border-color: #4caf50;
 }
+.badge.feed-circle.agregó:before {
+    border-color: #9c27b0;
+}
+.badge.feed-circle.editó:before {
+    border-color: #41aaff;
+}
 .badge.feed-circle.deshabilito:before {
-    border-color: #F44336;
+    border-color: #f44336;
 }
 
 .badge.feed-circle:before {
@@ -43,7 +46,7 @@ span.badge.feed-circle{
     content: '';
     display: block;
     width: 0;
-    height: 100%;
+    height: 127%;
     position: absolute;
     left: 24px;
     top: 58%;

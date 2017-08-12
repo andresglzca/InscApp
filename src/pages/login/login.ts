@@ -48,6 +48,7 @@ export class LoginPage {
   password: string;
 
   login2() {
+    var currentUser;
     let loader = this.loadingCtrl.create({
       content: "Cargando..."
     });
@@ -55,7 +56,12 @@ export class LoginPage {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password)
         .then((response) => {
           loader.dismiss();
-          let currentUser = firebase.auth().currentUser.email;
+          if (response.displayName) {
+            currentUser = response.displayName
+          } else {
+            currentUser = response.email
+          }
+          // let currentUser = firebase.auth().currentUser.email;
           window.localStorage.setItem('CurrentUser', currentUser);
           this.navCtrl.setRoot(HomePage);
         })
@@ -71,33 +77,38 @@ export class LoginPage {
 
   }
 
-  login() {
-    let loader = this.loadingCtrl.create({
-      content: "Cargando..."
-    });
-    if (this.email && this.password) {
-      loader.present();
-      this.angfire.auth.login({
-        email: this.email,
-        password: this.password
-      }, {
-          provider: AuthProviders.Password,
-          method: AuthMethods.Password
-        }).then((response) => {
-          this.navCtrl.setRoot(HomePage);
-          var CurrentUser = response.auth.email;
-          loader.dismiss();
-          window.localStorage.setItem('CurrentUser', CurrentUser);
-        }).catch((error) => {
-          this.showToastWithCloseButton(error);
-          loader.dismiss();
-        })
-    } else {
-      const error = "Debe ingrese sus datos para inicar sesión";
-      this.showToastWithCloseButton(error);
+  // login() {
+  //   var CurrentUser;
+  //   let loader = this.loadingCtrl.create({
+  //     content: "Cargando..."
+  //   });
+  //   if (this.email && this.password) {
+  //     loader.present();
+  //     this.angfire.auth.login({
+  //       email: this.email,
+  //       password: this.password
+  //     }, {
+  //         provider: AuthProviders.Password,
+  //         method: AuthMethods.Password
+  //       }).then((response) => {
+  //         this.navCtrl.setRoot(HomePage);
+  //         if (response.auth.displayName) {
+  //           CurrentUser = response.auth.displayName;
+  //         }else{
+  //           CurrentUser = response.auth.email;
+  //         }
+  //         loader.dismiss();
+  //         window.localStorage.setItem('CurrentUser', CurrentUser);
+  //       }).catch((error) => {
+  //         this.showToastWithCloseButton(error);
+  //         loader.dismiss();
+  //       })
+  //   } else {
+  //     const error = "Debe ingrese sus datos para inicar sesión";
+  //     this.showToastWithCloseButton(error);
 
-    }
-  };
+  //   }
+  // };
 
 
 

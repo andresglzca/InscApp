@@ -5,15 +5,17 @@
 			<ion-icon name="md-close" ></ion-icon>
 		</button>
     <ion-title>Editar campero</ion-title>
-    <button class="btn-save" ion-button (click)="submit()" form="edit-record" id="edit-record">
-			<span ion-text >Editar</span>
-		</button>
+    <ion-buttons end>
+      <button class="btn-save" ion-button outline (click)="submit()" form="edit-record" id="edit-record" color="primary" >
+        <span ion-text >Editar</span>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding class="edit-record-page">
   <form [(formGroup)]="data" #editRecordForm="ngForm" id="edit-record">
-    <div >
+    <div>
       <ion-item>
         <ion-label stacked>Nombre Completo *</ion-label>
         <ion-input text-capitalize formControlName="name" type="text"></ion-input>
@@ -27,7 +29,21 @@
       </ion-item>
       <ion-item>
         <ion-label>Fecha de nacimiento *</ion-label>
-        <ion-datetime formControlName="birthdate"  displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"></ion-datetime>
+        <ion-datetime formControlName="birthdate" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Talla de playera *</ion-label>
+        <ion-select formControlName="shirtSize" submitText="OK" cancelText="Cancelar">
+          <ion-option value="XS">XS (extra chica)</ion-option>
+          <ion-option value="S">S (chica)</ion-option>
+          <ion-option value="M">M (mediana)</ion-option>
+          <ion-option value="L">L (grande)</ion-option>
+          <ion-option value="XL">XL (extra grande)</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Iglesia</ion-label>
+        <ion-input text-capitalize formControlName="church" type="text"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label stacked>Observaciones</ion-label>

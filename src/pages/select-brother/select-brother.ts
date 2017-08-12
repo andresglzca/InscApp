@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-
-import { AddRecordPage } from '../add-record/add-record';
 /**
  * Generated class for the SelectBrotherPage page.
  *
@@ -30,7 +28,7 @@ export class SelectBrotherPage {
       this.loadedRecords = recordsList;
     });
     console.log(this.loadedRecords + 'items')
-   
+
   }
 
   initializeItems() {
@@ -66,7 +64,7 @@ export class SelectBrotherPage {
     let index = this.selectedBrothersList.indexOf(record);
     this.selectedBrothersList.splice(index, 1);
   }
-  saveListBrothers(){
+  saveListBrothers() {
     this.brothersListSaved = this.selectedBrothersList
     this.closeModal();
   }
@@ -74,6 +72,6 @@ export class SelectBrotherPage {
     this.viewCtrl.dismiss(this.brothersListSaved);
   }
   ionViewDidLoad() {
- this.initializeItems();
+    this.initializeItems();
   }
 }

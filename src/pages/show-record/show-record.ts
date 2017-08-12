@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { CallNumber } from '@ionic-native/call-number';
 import moment from 'moment';
 
 /**
@@ -17,7 +18,8 @@ export class ShowRecordPage {
 
   record; history: FirebaseListObservable<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public angFire: AngularFire) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    public viewCtrl: ViewController, public angFire: AngularFire, public callNmbr: CallNumber) {
     this.record = angFire.database.list('/usuarios');
   }
   section: string = "record-info";
@@ -59,7 +61,6 @@ export class ShowRecordPage {
       }
     });
   }
-
   test(data) {
     var datehistory = data
     moment.locale('es_MX')
@@ -69,5 +70,8 @@ export class ShowRecordPage {
   letter(data: string) {
     var letter = data.charAt(0).toLocaleUpperCase();
     return letter
+  }
+  callNumber(number){
+    this.callNmbr.callNumber(number, true)
   }
 }

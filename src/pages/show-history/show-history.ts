@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
+
+
+
 import moment from 'moment';
 
 
@@ -14,10 +17,11 @@ export class ShowHistoryPage {
   history: FirebaseListObservable<any>;
   when: any;
   empty = true;
-  
-  constructor(public navCtrl: NavController, public navParams: NavParams, public angFire: AngularFire, public loadingCtrl: LoadingController) {
-    this.history = angFire.database.list("/history")
 
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    public angFire: AngularFire, public loadingCtrl: LoadingController) {
+    this.history = angFire.database.list("/history")
+ 
     let loading = this.loadingCtrl.create({
       spinner: 'dots',
       content: 'Cargando historial...'
@@ -35,6 +39,16 @@ export class ShowHistoryPage {
       (err) => {
         console.log(err)
       })
+  
+    
+  }
+  check(item) {
+    if (typeof item === 'string') {
+      return 'string';
+    } else {
+     
+      return 'object';
+    }
   }
   dateFrom(data) {
     var datehistory = data

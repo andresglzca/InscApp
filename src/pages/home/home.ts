@@ -7,7 +7,6 @@ import { ShowRecordPage } from '../show-record/show-record';
 import { ShowHistoryPage } from '../show-history/show-history';
 import { PopoverComponent } from '../../components/popover/popover';
 import * as firebase from 'firebase';
-import * as $ from 'jquery'
 
 import moment from 'moment';
 
@@ -19,11 +18,13 @@ import moment from 'moment';
 @HostListener('window:scroll', [])
 export class HomePage {
 
-  records; settings; history: FirebaseListObservable<any>;
+  records; settings; history; brothers: FirebaseListObservable<any>;
   price; offertDiscount: number;
   paymenStatus; recordname: any;
   scrollw: any;
   empty = true;
+
+  theData: any;
 
 
 
@@ -42,7 +43,7 @@ export class HomePage {
 
     this.settings.subscribe(config => {
       this.price = config[0].price;
-      this.offertDiscount = config[0].offertDiscount;
+      this.offertDiscount = config[0].offertDisccount;
     });
 
     let loading = this.loadingCtrl.create({
@@ -52,12 +53,15 @@ export class HomePage {
     loading.present();
 
     this.records.subscribe(snapshots => {
-      if(snapshots == ""){
-       this.empty = true;
-      }else{
+      if (snapshots == "") {
+        this.empty = true;
+      } else {
         this.empty = false;
       }
+      this.theData = snapshots
       loading.dismissAll();
+console.log(this.theData);
+
 
     },
       (err) => {
@@ -67,9 +71,24 @@ export class HomePage {
 
   }
 
+  searchItem(ev: any) {
+    let val = ev.target.value;
 
-  onWindowScroll() {
-    console.log('hola')
+    this.records.subscribe((items) => {
+      this.theData = items
+    })
+
+    if (val && val.trim() != '') {
+     
+  
+
+      this.theData = this.theData.filter((item) => {
+        return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+
+      console.log(this.theData + '3');
+
+    }
   }
 
   public getCurrentUser() {
@@ -91,32 +110,7 @@ export class HomePage {
 
   }
 
-  public addDisplayName() {
-    let modal = this.alertCtrl.create({
-      title: 'Agrega tu nombre de usario',
-      message: 'El nombre de usuario debe ser corto como: John Doe',
-      inputs: [
-        {
-          name: 'displayName',
-          placeholder: 'Nombre de usuario'
-        },
-      ],
-      buttons: [{
-        text: 'Agregar',
-        handler: data => {
-          let user = firebase.auth().currentUser;
-          user.updateProfile({
-            displayName: data,
-            photoURL: ''
-          }).then((resp) => {
-            console.log('resp: ' + resp)
-          })
-          console.log(data)
-        }
-      }]
-    })
-    modal.present();
-  }
+
 
   public checkPayment(data, price) {
     if (data == price) {
@@ -259,11 +253,41 @@ export class HomePage {
   //   confirm.present();
   // }
 
+  checkDisscount(key) {
+
+    var totalhermanos = [];
+
+    this.brothers = this.angFire.database.list('/usuarios/' + key + '/hermanos');
+
+    this.brothers.subscribe(items => {
+      var hermanos = [];
+      items.forEach(item => {
+        hermanos.push(item)
+      });
+      totalhermanos = hermanos
+    })
+
+    return totalhermanos.length
+  }
+
   addPayment(key, payment: number, name) {
     var price = +this.price;
     payment = +payment;
     var debt = price - payment;
 
+    var numHermanos = this.checkDisscount(key)
+
+    if (numHermanos == 2) {
+      price = +this.price - this.offertDiscount / 2
+      debt = price - payment
+    }
+    if (numHermanos >= 3) {
+      price = +this.price - this.offertDiscount
+      debt = price - payment
+    }
+
+
+    console.log(this.checkDisscount(key))
 
     if (payment >= 0 && payment < price) {
       let addpay = this.alertCtrl.create({

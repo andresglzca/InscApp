@@ -60,6 +60,8 @@ export class AddRecordPage {
       gender: ['', Validators.required],
       name: ['', Validators.required],
       birthdate: ['', Validators.required],
+      shirtSize: ['', Validators.required],
+      church: [''],
       parent: ['', Validators.required],
       contact: ['', Validators.required],
       staff: ['', Validators.required],
@@ -69,7 +71,7 @@ export class AddRecordPage {
       registrationdate: [''],
       photURL: [''],
       'hermanos': {
-        
+
       }
     });
 
@@ -112,22 +114,22 @@ export class AddRecordPage {
     });
 
   }
- 
+
   addBrothers() {
     let modal = this.modalCtrl.create(SelectBrotherPage);
 
     modal.onDidDismiss((brotherListSaved) => {
       this.brothersListSaved = brotherListSaved;
-    
+
     });
     modal.present();
 
   }
 
   // streamBrothers(brotherName){
-    
+
   //   this.brothersListSaved.forEach(name => {
-      
+
   //     this.records = this.angFire.database.list('/usuarios', {
   //       query: {
   //         orderByChild: 'name',
@@ -139,11 +141,27 @@ export class AddRecordPage {
   //       var key = items[0].$key
   //       this.records.update(key, { hermanos:this.data.controls.hermanos.value})
   //     })
-     
+
   //   });
-   
+
   // }
 
+  checkDuplicates(name: string) {
+    var isDuplicate = true;
+    this.records.subscribe(items => {
+      items.forEach(element => {
+        var cName: string = element.name
+        cName = cName.replace(/[\s]/g, '');
+        name = name.replace(/[\s]/g, '');
+        cName = cName.toString().toUpperCase();
+        name = name.toString().toUpperCase();
+        if (cName == name) {
+          isDuplicate = false;
+        }
+      });
+    });
+    return isDuplicate
+  }
 
   paymentStatus(): string {
     let control = Number(this.data.controls['payment'].value);
@@ -186,7 +204,8 @@ export class AddRecordPage {
 
   submit(): void {
 
-    if (this.validate()) {
+
+    if (this.validate() && this.checkDuplicates(this.data.controls.name.value)) {
       this.data.controls['paymentstatus'].setValue(this.paymentStatus());
       var dateFormated = moment(this.data.controls['birthdate'].value, 'YYYY-MM-DD').format('DD/MM/YYYY');
       this.data.controls['birthdate'].setValue(dateFormated);
@@ -224,11 +243,23 @@ export class AddRecordPage {
             const pushRecord = this.records.push(this.data.value);
             pushRecord
               // .then(_ => this.streamBrothers(this.data.controls.name.value) )
-              .then(_ => loader.dismiss())
-              .then(_ => this.closeModal())
+              .then(_ => {
+                loader.dismiss()
+                this.history.push(historyData)
+                if (this.data.controls.payment.value) {
+                  let historyDataPayment = {
+                    action: 'abonó $' + this.data.controls.payment.value,
+                    staff: this.getCurrentUser(),
+                    date: moment().format("dddd, MMMM Do YYYY, h:mm:ss a"),
+                    user: this.data.controls.name.value
+                  };
+                  this.history.push(historyDataPayment)
+                };
+                this.closeModal();
+              })
               .catch(err => console.log(err, 'You dont have access!'));
           })
-          const pushHistory = this.history.push(historyData);
+
         }, (err) => {
           alert(err)
           this.closeModal();
@@ -237,18 +268,41 @@ export class AddRecordPage {
 
       } else {
         //saving data action
-        if(this.brothersListSaved){
+        if (this.brothersListSaved) {
           this.data.controls['hermanos'].setValue(this.brothersListSaved)
         }
         const pushRecord = this.records.push(this.data.value);
         loader.present();
         pushRecord
           // .then(_ => this.streamBrothers(this.data.controls.name.value))
-          .then(_ => loader.dismiss())
-          .then(_ => this.closeModal())
+          .then(_ => {
+            loader.dismiss()
+            this.history.push(historyData)
+            if (this.data.controls.payment.value) {
+              let historyDataPayment = {
+                action: 'abonó $' + this.data.controls.payment.value,
+                staff: this.getCurrentUser(),
+                date: moment().format("dddd, MMMM Do YYYY, h:mm:ss a"),
+                user: this.data.controls.name.value
+              };
+              this.history.push(historyDataPayment)
+            };
+            this.closeModal();
+          })
           .catch(err => console.log(err, 'You dont have access!'));
-        const pushHistory = this.history.push(historyData);
       }
+    } else {
+
+      this.alertCtrl.create({
+        title: 'Algo anda mal!',
+        subTitle: 'Al parecer este Campero ya se inscribio',
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            this.closeModal();
+          }
+        }]
+      }).present();
     }
 
 
@@ -260,7 +314,6 @@ export class AddRecordPage {
 
   ionViewDidLoad() {
 
-    console.log(this.navParams.get('name'));
   }
 
 }

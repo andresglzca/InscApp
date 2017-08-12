@@ -2,17 +2,25 @@ ion-header .button-md{
     vertical-align: middle
 }
 .add-record-header ion-title{
-    display: inline-flex
+    display: inline-flex;
+    
+    
 }
-.add-record-header .btn-save{
-    position: absolute;
-    box-shadow: none;
-    top: 0;
-    right: 0;
-    margin: 0;
-    border-radius: 0;
-    height: 100%;
+.add-record-header ion-icon{
+     font-size: 1.5em;
 }
+.add-record-header.title-ios{
+    padding-top: 33px !important;
+}
+// .add-record-header .btn-save{
+//     position: absolute;
+//     box-shadow: none;
+//     top: 0;
+//     right: 0;
+//     margin: 0;
+//     border-radius: 0;
+//     height: 100%;
+// }
 
 ion-input.input-payment:before{
     content: "$";

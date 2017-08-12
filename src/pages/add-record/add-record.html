@@ -1,16 +1,20 @@
 <ion-header class="add-record-header">
   <ion-navbar>
-    <button ion-button clear (click)="closeModal()">
+
+    <button ion-button  clear  (click)="closeModal()">
 			<ion-icon name="md-close" ></ion-icon>
-		</button>
+    </button>
+  
     <ion-title>Agregar campero</ion-title>
-    <button class="btn-save" ion-button (click)="submit()" form="add-record" id="add-record">
-			<span ion-text  >Guardar</span>
-		</button>
+    <ion-buttons end>
+      <button class="btn-save" ion-button outline  (click)="submit()" form="add-record" id="add-record" color="primary">
+			  <span ion-text  >Guardar</span>
+       </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="add-record-page" >
+<ion-content class="add-record-page">
   <form [(formGroup)]="data" #addRecordForm="ngForm" id="add-record">
     <ion-grid>
       <ion-row>
@@ -39,6 +43,20 @@
     <ion-item>
       <ion-label>Fecha de nacimiento *</ion-label>
       <ion-datetime formControlName="birthdate" displayFormat="DD MM YYYY" pickerFormat="DD MM YYYY"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Talla de playera *</ion-label>
+      <ion-select formControlName="shirtSize" submitText="OK" cancelText="Cancelar">
+        <ion-option value="XS">XS (extra chica)</ion-option>
+        <ion-option value="S">S (chica)</ion-option>
+        <ion-option value="M">M (mediana)</ion-option>
+        <ion-option value="L">L (grande)</ion-option>
+        <ion-option value="XL">XL (extra grande)</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Iglesia</ion-label>
+      <ion-input text-capitalize formControlName="church" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>Observaciones</ion-label>

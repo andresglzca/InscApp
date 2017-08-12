@@ -19,13 +19,15 @@ export class EditRecordPage {
   date = '11/05/2011';
   dataUpdated: Array<any>;
   brothersListSaved: any;
-  oName; oGender; oBirthdate; oDescription: any;
+  oName; oGender; oBirthdate; oDescription; oShirtSize; oChurch: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public formBuilder: FormBuilder, public angFire: AngularFire, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
     this.data = this.formBuilder.group({
       name: ['', Validators.required],
       gender: ['', Validators.required],
       birthdate: ['', Validators.required],
+      shirtSize: ['', Validators.required],
+      church: [''],
       description: [''],
       'hermanos': {
 
@@ -46,7 +48,6 @@ export class EditRecordPage {
 
     this.record.subscribe(item => {
       var myDate = moment(item[0].birthdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
-      console.log(myDate)
       var newBirthdate = new Date(myDate).toISOString();
 
       this.data.controls.name.setValue(item[0].name)
@@ -57,6 +58,10 @@ export class EditRecordPage {
       this.oBirthdate = newBirthdate
       this.data.controls.description.setValue(item[0].description)
       this.oDescription = item[0].description
+      this.data.controls.shirtSize.setValue(item[0].shirtSize)
+      this.oShirtSize = item[0].shirtSize
+      this.data.controls.church.setValue(item[0].church)
+      this.oChurch = item[0].church
 
 
 
@@ -89,35 +94,49 @@ export class EditRecordPage {
     });
 
     if (this.data.valid) {
-      // var dataCompared = [];
-      // if (this.oName != this.data.controls.name.value) {
-      //   dataCompared.push({
-      //     'name': this.oName,
-      //     'newName': this.data.controls.name.value
-      //   })
-      // }
-      // if (this.oGender != this.data.controls.gender.value) {
-      //   dataCompared.push({
-      //     'gender': this.oGender,
-      //     'newGender': this.data.controls.gender.value
-      //   })
-      // }
+      var dataCompared = [];
+      if (this.oName != this.data.controls.name.value) {
+        var changeName = "Nombre"
+        dataCompared.push(changeName)
+      }
+      if (this.oGender != this.data.controls.gender.value) {
+        var changeGender = "Sexo"
+        dataCompared.push(changeGender)
+      }
+      if (this.oBirthdate != this.data.controls.birthdate.value) {
+        var changeBirthday = "Fecha de Nacimiento"
+        dataCompared.push(changeBirthday)
+      }
+      if (this.oDescription != this.data.controls.description.value) {
+        var changeDesc = "Descripción"
+        dataCompared.push(changeDesc)
+      }
+      if (this.oShirtSize != this.data.controls.shirtSize.value) {
+        var changeShirtSize = "Talla de playera"
+        dataCompared.push(changeShirtSize)
+      }
+      if (this.oChurch != this.data.controls.church.value) {
+        var changeChurch = "Iglesia"
+        dataCompared.push(changeChurch)
+      }
 
-      // console.log(dataCompared)
+      console.log(dataCompared)
 
       moment.locale('es_MX')
       let historyData = {
         action: 'editó',
         staff: this.getCurrentUser(),
         date: moment().format("dddd, MMMM Do YYYY, h:mm:ss a"),
-        user: this.data.controls['name'].value
+        user: this.data.controls['name'].value,
+        description: dataCompared
       }
       var dateFormated = moment(this.data.controls['birthdate'].value, 'YYYY-MM-DD').format('DD/MM/YYYY');
       this.data.controls['birthdate'].setValue(dateFormated);
-      this.data.controls['hermanos'].setValue(this.brothersListSaved)
+      if (this.brothersListSaved) {
+        this.data.controls['hermanos'].setValue(this.brothersListSaved)
+      }
       this.record.update(this.keyRecordToShow, this.data.value)
-
-      this.history.push(historyData)
+        .then(_ => this.history.push(historyData))
         .then(_ => loader.dismiss())
         .then(_ => this.closeModal())
     }

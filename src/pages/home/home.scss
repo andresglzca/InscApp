@@ -17,10 +17,15 @@
     font-size: 12px;
     align-self: flex-start;
     position: absolute;
-   	margin-bottom: 16px !important;
     position: absolute;
     right: 0;
     bottom: 0;
+  }
+  ion-note.note.note-md{
+	  margin-bottom: 16px !important;
+  }
+  ion-note.note.note-ios{
+    margin-bottom: 13px !important;
   }
   h2{
   	display: inline-block;
@@ -60,12 +65,20 @@
     border-radius: 50%;
     overflow: hidden;
     text-align: center;
-        display: table-cell;
-    vertical-align: middle;
+    display: table-cell;
+     vertical-align: middle;
     background: #607D8B;
     color: white;
-    font-weight: bold
+    font-weight: bold;
+    line-height: 40px;
 
+}
+  .v-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 .circle#femenino{
   background: #E91E63;
