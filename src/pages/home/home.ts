@@ -277,11 +277,11 @@ console.log(this.theData);
 
     var numHermanos = this.checkDisscount(key)
 
-    if (numHermanos == 2) {
+    if (numHermanos == 1) {
       price = +this.price - this.offertDiscount / 2
       debt = price - payment
     }
-    if (numHermanos >= 3) {
+    if (numHermanos >= 2) {
       price = +this.price - this.offertDiscount
       debt = price - payment
     }
