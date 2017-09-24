@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, LoadingController, AlertController, ModalController } from 'ionic-angular';
+import { IonicPage ,NavController, NavParams, ViewController, LoadingController, AlertController, ModalController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -28,6 +28,7 @@ export class customValidator {
   }
 }
 
+@IonicPage()
 @Component({
   selector: 'page-add-record',
   templateUrl: 'add-record.html',

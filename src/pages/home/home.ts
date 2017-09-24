@@ -1,12 +1,11 @@
 import { Component, HostListener } from '@angular/core';
 import { NavController, ModalController, ModalOptions, ToastController, AlertController, PopoverController, LoadingController, ActionSheetController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import { AddRecordPage } from '../add-record/add-record';
-import { EditRecordPage } from '../edit-record/edit-record';
-import { ShowRecordPage } from '../show-record/show-record';
-import { ShowHistoryPage } from '../show-history/show-history';
+//import { AddRecordPage } from '../add-record/add-record';
+//import { EditRecordPage } from '../edit-record/edit-record';
+//import { ShowRecordPage } from '../show-record/show-record';
+// import { ShowHistoryPage } from '../show-history/show-history';
 import { PopoverComponent } from '../../components/popover/popover';
-import * as firebase from 'firebase';
 
 import moment from 'moment';
 
@@ -22,6 +21,7 @@ export class HomePage {
   price; offertDiscount: number;
   paymenStatus; recordname: any;
   scrollw: any;
+  globalMessage: string;
   empty = true;
 
   theData: any;
@@ -55,13 +55,12 @@ export class HomePage {
     this.records.subscribe(snapshots => {
       if (snapshots == "") {
         this.empty = true;
+        this.globalMessage = "Aún no hay camperos"
       } else {
         this.empty = false;
       }
       this.theData = snapshots
       loading.dismissAll();
-console.log(this.theData);
-
 
     },
       (err) => {
@@ -69,6 +68,12 @@ console.log(this.theData);
       })
 
 
+  }
+
+  initializeData(){
+    this.records.subscribe((items) => {
+      this.theData = items
+    })
   }
 
   searchItem(ev: any) {
@@ -79,9 +84,6 @@ console.log(this.theData);
     })
 
     if (val && val.trim() != '') {
-     
-  
-
       this.theData = this.theData.filter((item) => {
         return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
@@ -97,7 +99,81 @@ console.log(this.theData);
   }
 
   showHistory() {
-    this.navCtrl.push(ShowHistoryPage);
+    this.navCtrl.push('ShowHistoryPage');
+  }
+
+  filterRecords() {
+    var filterBy;
+    let filterAlert = this.alertCtrl.create();
+
+    filterAlert.setTitle('Mostrar solo: ');
+
+    filterAlert.addInput({
+      type: 'radio',
+      label: 'Pagados',
+      value: 'paid',
+    });
+
+    filterAlert.addInput({
+      type: 'radio',
+      label: 'Pendientes',
+      value: 'pending',
+    });
+
+    filterAlert.addInput({
+      type: 'radio',
+      label: 'Sin Pago',
+      value: 'unpaid',
+    });
+
+    filterAlert.addButton('Cancelar');
+    filterAlert.addButton({
+      text: 'Ok',
+      handler: data => {
+        switch (data) {
+          case "paid":
+            filterBy = data
+            break;
+          case "pending":
+            filterBy = data
+            break;
+          case "unpaid":
+            filterBy = data
+            break;
+
+          default:
+            break;
+        }
+        
+        this.theData = this.theData.filter((item) => {
+          return item.paymentstatus == data
+        })
+        
+        document.getElementById('filter').setAttribute('style', 'display:none');
+        document.getElementById('return').setAttribute('style', 'display:inline');
+        document.getElementById('searchbar').setAttribute('class', 'animated fadeOutUp')
+        
+     
+
+
+        if (this.theData == "") {
+          this.empty = true;
+          this.globalMessage = "No se encontrarón resultados"
+        }
+
+      }
+    });
+
+    filterAlert.present();
+
+  }
+
+  returnFilter(){
+    document.getElementById('searchbar').setAttribute('class', 'animated fadeInDown')
+    document.getElementById('filter').setAttribute('style', 'display:inline')
+    document.getElementById('return').setAttribute('style', 'display:none')
+    this.initializeData();
+    this.empty = false;
   }
 
   popOver(ev) {
@@ -129,7 +205,7 @@ console.log(this.theData);
       keyRecord: key,
       userName: name
     }
-    this.navCtrl.push(ShowRecordPage, data)
+    this.navCtrl.push('ShowRecordPage', data)
   }
 
   addRecord() {
@@ -141,7 +217,7 @@ console.log(this.theData);
       cssClass: 'miClase',
       showBackdrop: true
     }
-    let modal = this.modalCtrl.create(AddRecordPage, settings, myModalOptions);
+    let modal = this.modalCtrl.create('AddRecordPage', settings, myModalOptions);
     modal.present();
   }
 
@@ -150,7 +226,7 @@ console.log(this.theData);
       keyRecord: key
     }
 
-    this.modalCtrl.create(EditRecordPage, data).present();
+    this.modalCtrl.create('EditRecordPage', data).present();
   }
 
   disableRecord(key, name) {

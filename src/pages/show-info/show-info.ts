@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import moment from 'moment';
 
+@IonicPage()
 @Component({
   selector: 'page-show-info',
   templateUrl: 'show-info.html',

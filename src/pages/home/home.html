@@ -2,8 +2,11 @@
 	<ion-navbar>
 		<ion-title>Capernaúm</ion-title>
 		<ion-buttons end>
-			<button ion-button icon-only (click)="showHistory()">
-  				<ion-icon name="list"></ion-icon>
+			<button id="filter" ion-button icon-only (click)="filterRecords()">
+				<ion-icon name="ios-funnel"></ion-icon>
+			</button>
+			<button style="display:none" id="return" ion-button icon-only (click)="returnFilter()">
+				<ion-icon name="return-left"></ion-icon>
 			</button>
 			<button ion-button icon-only (click)="popOver($event)">
   				<ion-icon name="more"></ion-icon>
@@ -13,13 +16,13 @@
 </ion-header>
 
 <ion-content class="list-avatar-page" (ionScroll)="scroll($event)">
-	<ion-searchbar (ionInput)="searchItem($event)"></ion-searchbar>
-	<p  class="v-center no-hay" *ngIf="empty">Aun no hay camperos</p>
+	<div id="searchbar"><ion-searchbar (ionInput)="searchItem($event)"></ion-searchbar></div>
+	<p  class="v-center no-hay" *ngIf="empty">{{globalMessage}}</p>
 
 	<ion-list (scroll)="scroll($event)">
 		<div id="scroll"></div>
 		<!-- <button ion-item (click)="showRecordPage(record.$key, record.name)" (press)="deleteRecord(record.$key, record.name)"> -->
-		<button ion-item detail-none *ngFor="let record of theData" disabled="{{record.status}}"  (click)="showRecordPage(record.$key, record.name)"
+		<button class="animated fadeInUp" ion-item detail-none *ngFor="let record of theData" disabled="{{record.status}}"  (click)="showRecordPage(record.$key, record.name)"
 		 (press)="showActionSheet(record.$key, record.name, record.payment)" >
 				<ion-avatar item-left>
 					<img *ngIf="record.photURL" src="{{record.photURL}}">

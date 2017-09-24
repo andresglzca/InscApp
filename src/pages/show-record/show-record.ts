@@ -1,22 +1,18 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { CallNumber } from '@ionic-native/call-number';
 import moment from 'moment';
 
-/**
- * Generated class for the ShowRecordPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+@IonicPage()
 @Component({
   selector: 'page-show-record',
   templateUrl: 'show-record.html',
 })
 export class ShowRecordPage {
 
-  record; history: FirebaseListObservable<any>;
+  record; history; settings; brothers: FirebaseListObservable<any>;
+  price; offertDiscount: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public viewCtrl: ViewController, public angFire: AngularFire, public callNmbr: CallNumber) {
@@ -45,6 +41,34 @@ export class ShowRecordPage {
       }
     });
 
+    this.settings = this.angFire.database.list("/settings");
+
+    
+
+    this.settings.subscribe(config => {
+      this.price = config[0].price;
+      this.offertDiscount = config[0].offertDisccount;
+    });
+
+
+    var totalhermanos = [];
+
+    this.brothers = this.angFire.database.list('/usuarios/' + keyRecordToShow + '/hermanos');
+
+    this.brothers.subscribe(items => {
+      var hermanos = [];
+      items.forEach(item => {
+        hermanos.push(item)
+      });
+      totalhermanos = hermanos
+    })
+      
+      var price = this.navParams.get('price');
+      var numHermanos = totalhermanos.length
+      var debt;
+      
+    
+
     this.record.subscribe(items => {
       var birthdate = items[0].birthdate;
       this.age = moment().diff(moment(birthdate, "DD/MM/YYYY"), 'years');
@@ -55,7 +79,18 @@ export class ShowRecordPage {
         this.paymentbadge = "Pagado";
       } else {
         var payment = items[0].payment;
-        var price = this.navParams.get('price');
+
+
+        if (numHermanos == 1) {
+          price = +this.price - this.offertDiscount / 2
+          debt = price - payment
+        }
+        if (numHermanos >= 2) {
+          price = +this.price - this.offertDiscount
+          debt = price - payment
+        }
+        
+        
         var debt = price - payment;
         this.paymentbadge = "$" + debt;
       }

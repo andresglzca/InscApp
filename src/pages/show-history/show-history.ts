@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-
-
-
 
 import moment from 'moment';
 
-
+@IonicPage()
 @Component({
   selector: 'page-show-history',
   templateUrl: 'show-history.html',
@@ -17,6 +14,7 @@ export class ShowHistoryPage {
   history: FirebaseListObservable<any>;
   when: any;
   empty = true;
+  dataTemp: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     public angFire: AngularFire, public loadingCtrl: LoadingController) {
@@ -28,19 +26,33 @@ export class ShowHistoryPage {
     });
     loading.present();
 
-    this.history.subscribe(snapshots => {
-      if (snapshots == "") {
-        this.empty = true;
-      } else {
-        this.empty = false;
-      }
-      loading.dismissAll();
-    },
-      (err) => {
-        console.log(err)
-      })
+    if (!this.dataTemp) {
+      this.history.subscribe(snapshots => {
+        this.dataTemp = snapshots
+        console.log(this.dataTemp);
+      });
+      loading.dismiss();
+    } else {
+      loading.dismiss();
+    }
+
+    
+      
+    //   if (snapshots == "") {
+    //     this.empty = true;
+    //   } else {
+    //     this.empty = false;
+    //   }
+    //   loading.dismissAll();
+    // },
+    //   (err) => {
+    //     console.log(err)
+    //   })
   
     
+  }
+  showTestPage(){
+    this.navCtrl.push('TestPage')
   }
   check(item) {
     if (typeof item === 'string') {

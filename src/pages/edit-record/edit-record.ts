@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController, ModalController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
-import { SelectBrotherPage } from '../select-brother/select-brother';
+//import { SelectBrotherPage } from '../select-brother/select-brother';
 
 import moment from 'moment';
 
+@IonicPage()
 @Component({
   selector: 'page-edit-record',
   templateUrl: 'edit-record.html',
@@ -70,7 +71,7 @@ export class EditRecordPage {
   }
 
   addBrothers() {
-    let modal = this.modalCtrl.create(SelectBrotherPage);
+    let modal = this.modalCtrl.create('SelectBrotherPage');
 
     modal.onDidDismiss((brotherListSaved) => {
       this.brothersListSaved = brotherListSaved;
@@ -134,6 +135,8 @@ export class EditRecordPage {
       this.data.controls['birthdate'].setValue(dateFormated);
       if (this.brothersListSaved) {
         this.data.controls['hermanos'].setValue(this.brothersListSaved)
+        var brothers = "Agrego Hermanos: "+ this.brothersListSaved
+        dataCompared.push(brothers);
       }
       this.record.update(this.keyRecordToShow, this.data.value)
         .then(_ => this.history.push(historyData))

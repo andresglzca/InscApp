@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-/**
- * Generated class for the SelectBrotherPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
+@IonicPage()
 @Component({
   selector: 'page-select-brother',
   templateUrl: 'select-brother.html',

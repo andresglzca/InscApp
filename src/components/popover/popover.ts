@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, ViewController, ToastController } from 'ionic-angular';
 import { LoginPage } from '../../pages/login/login';
-import { ShowInfoPage } from '../../pages/show-info/show-info';
+//import { ShowInfoPage } from '../../pages/show-info/show-info';
+//import { ShowHistoryPage } from '../../pages/show-history/show-history';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import * as firebase from 'firebase';
 
@@ -17,6 +18,10 @@ export class PopoverComponent {
 
 
 
+  }
+  showHistory() {
+    this.navCtrl.push('ShowHistoryPage');
+    this.viewCtrl.dismiss();
   }
 
   logout() {
@@ -112,7 +117,7 @@ export class PopoverComponent {
   };
 
   ShowInfoPage() {
-    this.navCtrl.push(ShowInfoPage);
+    this.navCtrl.push('ShowInfoPage');
     this.viewCtrl.dismiss();
   }
 
